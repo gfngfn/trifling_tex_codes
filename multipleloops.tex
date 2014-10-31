@@ -1,0 +1,33 @@
+\documentclass{jsarticle}
+%\def\loop#1\repeat{\def\body{#1}\iterate}
+%\def\iterate{\body \let\next\iterate \else\let\next\relax\fi \next}
+%\let\repeat=\fi % this makes \loop...\if...\repeat skippable
+\makeatletter
+  \newcommand{\varloop}[5]{%
+    \setcounter{#1}{#2}%
+    \expandafter\providecommand\expandafter{\csname bodyof#1@varloop@gfncmd\endcsname}{}%
+    \expandafter\renewcommand\expandafter{\csname bodyof#1@varloop@gfncmd\endcsname}{#5}%
+    \expandafter\providecommand\expandafter{\csname iterateof#1@varloop@gfncmd\endcsname}{}%
+    \expandafter\renewcommand\expandafter{\csname iterateof#1@varloop@gfncmd\endcsname}{%
+      \csname bodyof#1@varloop@gfncmd\endcsname%
+      \expandafter\ifnum\value{#1}<#3\relax%
+        \addtocounter{#1}{#4}%
+        \expandafter\let\expandafter\next\expandafter=\csname iterateof#1@varloop@gfncmd\endcsname%
+      \else%
+        \let\next=\relax%
+      \fi%
+      \next%
+    }%
+    \csname iterateof#1@varloop@gfncmd\endcsname%
+  }%
+\makeatother
+\begin{document}
+  \newcounter{outercnt}%
+  \newcounter{innercnt}
+  \varloop{outercnt}{0}{3}{1}{%
+    \varloop{innercnt}{0}{8}{1}{%
+      (\arabic{outercnt}, \arabic{innercnt})%
+    }%
+  }%
+  \par
+\end{document}

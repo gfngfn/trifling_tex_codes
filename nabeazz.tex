@@ -1,0 +1,75 @@
+\documentclass{jsarticle}
+\makeatletter
+%
+  \def\loopsub#1\repeatsub{%
+    \def\bodysub{#1}%
+    \iteratesub
+  }%
+  \def\iteratesub{%
+    \bodysub
+      \let\next=\iteratesub
+    \else
+      \let\next=\relax
+    \fi
+    \next
+  }%
+  \def\repeatsub{\fi}%
+%
+  \newcount\n@count
+  \newcount\i@count
+  \newif\ifAho
+  \def\NabeAzz#1{%
+    \n@count=#1\relax
+    \i@count=1\relax
+    \loopsub
+      \Ahofalse
+      \NabeAzzDivideThree\i@count
+      \NabeAzzFoundThree\i@count
+      \ifAho
+        \ {\HUGE \textit{\the\i@count}}%
+      \else
+        \ \texttt{\the\i@count}%
+      \fi
+    \ifnum\i@count<\n@count\relax
+      \advance\i@count by1\relax
+    \repeatsub
+  }%
+%
+  \newcount\j@count
+  \def\NabeAzzDivideThree#1{%
+    \j@count=#1\relax
+    \loop
+    \ifnum\j@count>2\relax
+      \advance\j@count by-3\relax
+    \repeat
+    \ifnum\j@count=0\relax
+      \Ahotrue
+    \fi
+  }%
+%
+  \def\NabeAzzFoundThree#1{%
+    \j@count=#1\relax
+    \expandafter\NabeAzzFoundThreeIterate\the\j@count\EndOfArgument
+  }%
+%
+  \def\NabeAzzFoundThreeEnd#1\EndOfArgument{}%
+%
+  \def\NabeAzzFoundThreeIterate#1#2\EndOfArgument{%
+    \def\tempcs{#2}%
+    \typeout{TYPEOUT: #1, #2}%
+    \if3#1
+      \Ahotrue
+      \let\NextIterate=\NabeAzzFoundThreeEnd
+    \else
+      \ifx\tempcs\empty%
+        \let\NextIterate=\NabeAzzFoundThreeEnd
+      \else
+        \let\NextIterate=\NabeAzzFoundThreeIterate
+      \fi
+    \fi
+    \NextIterate#2\EndOfArgument%
+  }%
+\makeatother
+\begin{document}
+\NabeAzz{40}
+\end{document}
