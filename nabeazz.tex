@@ -56,8 +56,7 @@
 %
   \def\NabeAzzFoundThreeIterate#1#2\EndOfArgument{%
     \def\tempcs{#2}%
-    \typeout{TYPEOUT: #1, #2}%
-    \if3#1
+    \if3#1%
       \Ahotrue
       \let\NextIterate=\NabeAzzFoundThreeEnd
     \else
