@@ -13,7 +13,7 @@
     \fi
     \next
   }%
-  \def\repeatsub{\fi}%
+  \let\repeatsub=\fi
 %
   \newcount\n@count
   \newcount\i@count
@@ -56,17 +56,17 @@
 %
   \def\NabeAzzFoundThreeIterate#1#2\EndOfArgument{%
     \def\tempcs{#2}%
-    \if3#1%
+    \if3#1\relax
       \Ahotrue
       \let\NextIterate=\NabeAzzFoundThreeEnd
     \else
-      \ifx\tempcs\empty%
+      \ifx\tempcs\empty
         \let\NextIterate=\NabeAzzFoundThreeEnd
       \else
         \let\NextIterate=\NabeAzzFoundThreeIterate
       \fi
     \fi
-    \NextIterate#2\EndOfArgument%
+    \NextIterate#2\EndOfArgument
   }%
 \makeatother
 \begin{document}
