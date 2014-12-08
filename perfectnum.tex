@@ -1,0 +1,68 @@
+\documentclass{jsarticle}
+\makeatletter
+  \def\constzero{o}
+  \def\constone{x}
+  \def\@endofargument{}
+  \def\succ#1{%
+    \@succ#1\empty\@endofargument
+  }
+  \def\@succ#1#2#3\@endofargument{%
+    \if#1\constzero
+      \constone#2#3%
+    \else
+      \if#2\relax\relax
+        \constzero\constone
+      \else
+        \constzero\@succ#2#3\@endofargument
+      \fi
+    \fi
+  }
+  \def\pred#1{%
+    \@pred
+    \@firsttime#1\empty\@endofargument
+  }
+  \def\@firsttime{y}
+  \def\@notfirsttime{n}
+  \def\@pred#1#2#3#4\@endofargument{%
+    \if#2\constone\relax
+      \if#3\relax\relax
+        \if#1\@firsttime
+          \constzero
+        \fi
+      \else
+        \constzero#3#4%
+      \fi
+    \else
+      \if#3\relax\relax
+      \else
+        \constone\@pred\@notfirsttime#3#4\@endofargument
+      \fi
+    \fi
+  }
+\makeatother
+\begin{document}
+  \edef\result{%
+    \succ{o},
+    \succ{x},
+    \succ{ox},
+    \succ{xx},
+    \succ{oox},
+    \succ{xox},
+    \succ{oxx}.
+  }
+  \result\par
+  \succ{xxox}\par% succ(11) => 12
+  \pred{x},
+  \pred{ox},
+  \pred{xx},
+  \pred{oox},
+  \pred{xox},
+  \pred{oxx}.
+  \pred{xxx}.
+  \par%  pred(5)  => 4
+  \pred{oxxx}\par% pred(14) => 13
+  \pred{ooox}\par% pred(8)  => 7
+%
+  \edef\param{\succ{xxxx}}
+  \expandafter\succ\expandafter{\param}
+\end{document}
