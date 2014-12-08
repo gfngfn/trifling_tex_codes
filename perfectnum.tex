@@ -42,24 +42,24 @@
 \makeatother
 \begin{document}
   \edef\result{%
-    \succ{o},
-    \succ{x},
-    \succ{ox},
-    \succ{xx},
-    \succ{oox},
-    \succ{xox},
-    \succ{oxx}.
+    \succ{o}, %   succ(0) => 1
+    \succ{x}, %   succ(1) => 2
+    \succ{ox}, %  succ(2) => 3
+    \succ{xx}, %  succ(3) => 4
+    \succ{oox}, % succ(4) => 5
+    \succ{xox}, % succ(5) => 6
+    \succ{oxx}. % succ(6) => 7
   }
   \result\par
   \succ{xxox}\par% succ(11) => 12
-  \pred{x},
-  \pred{ox},
-  \pred{xx},
-  \pred{oox},
-  \pred{xox},
-  \pred{oxx}.
-  \pred{xxx}.
-  \par%  pred(5)  => 4
+  \pred{x}, %   pred(1) => 0
+  \pred{ox}, %  pred(2) => 1
+  \pred{xx}, %  pred(3) => 2
+  \pred{oox}, % pred(4) => 3
+  \pred{xox}, % pred(5) => 4
+  \pred{oxx}. % pred(6) => 5
+  \pred{xxx}. % pred(7) => 6
+  \par
   \pred{oxxx}\par% pred(14) => 13
   \pred{ooox}\par% pred(8)  => 7
 %
