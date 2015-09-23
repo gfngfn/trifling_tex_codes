@@ -1,0 +1,33 @@
+\documentclass{article}
+\makeatletter
+% ---- definition of macros ----
+  \def\pftsucc#1{\expandafter\gfn@succmain\expandafter{\romannumeral-`>\gfn@rev{#1}{}}}
+  \def\gfn@idem#1{#1}
+  \def\gfn@gobble#1{}
+  \def\gfn@gobbleandone#1{1}
+  \def\gfn@rev#1{\csname gfn@\ifnum1<1#1idem\else gobble\fi\endcsname{\gfn@revsub#1\gfn@end}}
+  \def\gfn@revsub#1#2\gfn@end{\gfn@rev{#2}#1}
+  \def\gfn@succmain#1{\gfn@succmainsub#1\gfn@end}
+  \def\gfn@succmainsub#1#2\gfn@end{\csname gfn@case#1\endcsname{#2}}
+  \expandafter\def\csname gfn@case0\endcsname#1{\gfn@rev{#1}1}
+  \expandafter\def\csname gfn@case1\endcsname#1{\gfn@rev{#1}2}
+  \expandafter\def\csname gfn@case2\endcsname#1{\gfn@rev{#1}3}
+  \expandafter\def\csname gfn@case3\endcsname#1{\gfn@rev{#1}4}
+  \expandafter\def\csname gfn@case4\endcsname#1{\gfn@rev{#1}5}
+  \expandafter\def\csname gfn@case5\endcsname#1{\gfn@rev{#1}6}
+  \expandafter\def\csname gfn@case6\endcsname#1{\gfn@rev{#1}7}
+  \expandafter\def\csname gfn@case7\endcsname#1{\gfn@rev{#1}8}
+  \expandafter\def\csname gfn@case8\endcsname#1{\gfn@rev{#1}9}
+  \expandafter\def\csname gfn@case9\endcsname#1{%
+    \csname\ifnum1<1#1 gfn@idem\else gfn@gobbleandone\fi\endcsname{\gfn@succmain{#1}}0%
+  }
+% ---- perfect expansion ----
+  \edef\testA{\pftsucc{2015}}
+  \edef\testB{\pftsucc{2399}}
+  \edef\testC{\pftsucc{9999}}
+\makeatother
+\begin{document}
+  \indent The successor of 2015 is \testA.\par
+  \indent The successor of 2399 is \testB.\par
+  \indent The successor of 9999 is \testC.\par
+\end{document}
