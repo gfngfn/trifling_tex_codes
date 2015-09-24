@@ -1,7 +1,7 @@
 \documentclass{article}
 \makeatletter
 % ---- definition of macros ----
-  \def\pftsucc#1{\expandafter\gfn@succmain\expandafter{\romannumeral-`>\gfn@rev{#1}{}}}
+  \def\pftsucc#1{\expandafter\gfn@succmain\expandafter{\romannumeral-`>\gfn@rev{#1}}}
   \def\gfn@idem#1{#1}
   \def\gfn@gobble#1{}
   \def\gfn@gobbleandone#1{1}
@@ -19,7 +19,7 @@
   \expandafter\def\csname gfn@case7\endcsname#1{\gfn@rev{#1}8}
   \expandafter\def\csname gfn@case8\endcsname#1{\gfn@rev{#1}9}
   \expandafter\def\csname gfn@case9\endcsname#1{%
-    \csname\ifnum1<1#1 gfn@idem\else gfn@gobbleandone\fi\endcsname{\gfn@succmain{#1}}0%
+    \csname\ifnum1<1#1gfn@idem\else gfn@gobbleandone\fi\endcsname{\gfn@succmain{#1}}0%
   }
 % ---- perfect expansion ----
   \edef\testA{\pftsucc{2015}}
